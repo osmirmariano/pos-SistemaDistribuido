@@ -11,10 +11,16 @@ public class Servidor {
     Socket cliente = servidor.accept();
     System.out.println("Nova conexao com o cliente " + cliente.getInetAddress().getHostAddress());
 
-    Scanner entrada = new Scanner(cliente.getInputStream());
-    while(entrada.hasNextLine()) {
-      System.out.println("Mensagem recebida: " + entrada.nextLine());
+    int tamanho = input.readInt();
+    String nomeArq = input.readUTF();
+    FileOutputStream file = new FileOutputStream("C:/Users/osmir/Documents/GitHub/POS/pos-SistemaDistribuido/"+nomeArq);
+    byte[] buffer = new byte[tamanho];
+    while(true){
+      int len = input.read(buffer);
+      if(len == -1) break;
+      file.write(buffer, 0, len);
     }
+    System.out.println("Arquvio Recebido");
 
     entrada.close();
     servidor.close();
